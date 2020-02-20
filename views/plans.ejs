@@ -1,0 +1,46 @@
+<%- include ("partials/header.ejs") %>
+<%- include ("partials/homenavbar.ejs") %>
+<body>
+	<div class="container">
+		<h2>Lista de planos</h2>
+
+<hr>
+<% if (plans.system_msg === undefined) { %>
+
+	<% plans.forEach(plan => { %>
+	            <div class="card">
+	                <div class="card-header">
+	                    <h2><%= plan.title %></h2>
+	                </div>
+	                <div class="card-body">
+										<h3>Numero de listas: <%= plan.list %>"</h3>
+	                  <h3>clientes: <%= plan.client %>"</h3>
+										<h3>Valor: <%= plan.value %>"</h3>
+										<h3>possibilidade de importar
+                    <% if(plan.value) { %>
+											"sim"
+										<% } %>
+										<% if(!plan.value) { %>
+											"não"
+										<% } %>
+										</h3>
+	                </div>
+	            </div>
+	            <br>
+	        <% }) %>
+
+<% } else { %>
+<h5>Não foi possivel Carregar os planos</h5>
+<h4>Motivo</h4>
+<p><%= plans.system_msg %></p>
+<% } %>
+
+
+
+
+
+
+	</div>
+</body>
+
+<%- include ("partials/footer.ejs") %>
