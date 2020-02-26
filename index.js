@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -34,5 +34,5 @@ app.use("/", PlansRouter);
 
 // End Router
 app.listen(3000, () => {
-    console.log("O servidor está rodando!")
+    console.log("O servidor está rodando! porta: 3000")
 })
