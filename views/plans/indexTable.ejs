@@ -1,0 +1,57 @@
+<%- include ("../partials/header.ejs") %>
+<%- include ("../partials/homenavbar.ejs") %>
+<body>
+	<div class="container">
+		<h2>Lista de planos</h2>
+
+		<hr>
+		<div class="card">
+			<div class="card-body">
+		<% if (plans.system_msg === undefined) { %>
+
+		<table class="table table-striped table-hover">
+			<thead class="thead-dark">
+			  <tr>
+				<th scope="col">#Id</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Preço</th>
+				<th scope="col">import</th>
+			  </tr>
+			</thead>
+			<tbody>
+
+			<% plans.forEach(plan => { %>
+				<tr>
+					<th scope="row"><%= plan.id %></th>
+					<td><%= plan.title %></td>
+					<td>R$ <%= plan.value %></td>
+					<td>						
+						<h5>
+							<% if(plan.import) { %>
+								sim
+							<% } %>
+							<% if(!plan.import) { %>
+								não
+							<% } %>
+						</h5> 
+					</td>
+				</tr>
+			<% }) %>
+			</tbody>
+		</table>
+		<br>
+
+			<% } else { %>
+
+	<h5>Não foi possivel Carregar os planos</h5>
+	<h4>Motivo</h4>
+	<p><%= plans.system_msg %></p>
+
+			<% } %>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+<%- include ("../partials/footer.ejs") %>
