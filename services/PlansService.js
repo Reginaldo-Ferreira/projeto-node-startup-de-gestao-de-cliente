@@ -7,7 +7,7 @@ class PlansService {
     this.Plan = Database["Plan"];
   }
 
-  async listAll(){
+  async listAll(){ // no curso pelo professor o nome do method is getall()
     let dbPlan = {};
     var errors = {};
     try {
@@ -16,7 +16,7 @@ class PlansService {
       //  console.log(dbPlan);
     } catch (e) {
 
-      errors.system_msg = "Não foi possível Carregar os planos";
+      errors.system_msg = e;
 
       return errors;
     }
