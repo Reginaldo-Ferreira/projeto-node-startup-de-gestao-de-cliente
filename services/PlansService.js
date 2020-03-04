@@ -2,33 +2,69 @@
 var Database = require("../models/index");
 
 class PlansService {
-
-  constructor(){
+  constructor() {
     this.Plan = Database["Plan"];
   }
 
-  async listAll(){ // no curso pelo professor o nome do method is getall()
+  async update(id, data) {
+    var errors = {};
+console.log("atualizando ....................................................................")
+    var isValid = this.validate(data, errors);
+    if (isValid) {
+      try {
+        var plan = await this.getById(id);
+        plan.title = data.title;
+        plan.list = data.list;
+        plan.client = data.client;
+        plan.value = data.value;
+        await plan.save();
+        return true;
+      } catch (error) {
+        errors.system_msg = "não foi possível editar o plano";
+        return errors;
+      }
+    } else {
+      return errors;
+    }
+  }
+
+  async listAll() {
+    // no curso pelo professor o nome do method is getall()
     let dbPlan = {};
     var errors = {};
     try {
-      dbPlan = await this.Plan.findAll({ order:[['id','DESC']], limit: 4 });
+      dbPlan = await this.Plan.findAll({ order: [["id", "DESC"]], limit: 4 });
       return dbPlan;
       //  console.log(dbPlan);
     } catch (e) {
-
       errors.system_msg = e;
 
       return errors;
     }
-
   }
 
-
-  async store(plans){
+  async getById(id) {
+    let dbPlan = {};
     var errors = {};
-    if(plans.import != undefined){
+    try {
+      dbPlan = await this.Plan.findByPk(id);
+      if (dbPlan) {
+        return dbPlan;
+      } else {
+        errors.system_msg = `Id: [ ${id} ] não encontrado`;
+        return errors;
+      }
+      //  console.log(dbPlan);
+    } catch (e) {
+      return (errors.system_msg = e);
+    }
+  }
+
+  async store(plans) {
+    var errors = {};
+    if (plans.import != undefined) {
       plans.import = true;
-    }else {
+    } else {
       plans.import = false;
     }
 
@@ -39,11 +75,10 @@ class PlansService {
         await this.Plan.create(plans);
         return true;
       } catch (e) {
-
         errors.system_msg = "Não foi possível salvar o plano";
         return errors;
       }
-    }else {
+    } else {
       return errors;
     }
     // Plan.create(plans).then(() => {
@@ -53,33 +88,32 @@ class PlansService {
     // });
   }
 
-  validate(plan, errors){
+  validate(plan, errors) {
     var erroCount = 0;
-    if(plan.title == undefined){
+    if (plan.title == undefined) {
       errors.title_msg = "o título é inválido";
       erroCount++;
-    }else {
-      if(plan.title.length < 3){
-        errors.title_msg = "o título muito pequeno"
+    } else {
+      if (plan.title.length < 3) {
+        errors.title_msg = "o título muito pequeno";
         erroCount++;
       }
     }
 
-    if(plan.list  == undefined){
-      errors.list_msg = "A quantidade de listas é inválida"
+    if (plan.list == undefined) {
+      errors.list_msg = "A quantidade de listas é inválida";
       erroCount++;
-    }else {
-      if(plan.list < 1){
-        errors.list_msg = "A quantidade de listas é inválida"
+    } else {
+      if (plan.list < 1) {
+        errors.list_msg = "A quantidade de listas é inválida";
         erroCount++;
       }
     }
     if (erroCount == 0) {
-      return true
-    }else {
+      return true;
+    } else {
       return false;
     }
   }
-
 }
 module.exports = new PlansService();
