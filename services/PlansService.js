@@ -16,6 +16,8 @@ class PlansService {
         plan.list = data.list;
         plan.client = data.client;
         plan.value = data.value;
+        plan.import = data.import;
+        console.log(plan.import);
         await plan.save();
         return true;
       } catch (error) {
