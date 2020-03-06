@@ -1,7 +1,6 @@
 const PlansService = require("../services/PlansService");
 
 class PlansController {
-
   async index(req, res) {
     let plans = {};
     let erro = {};
@@ -20,7 +19,7 @@ class PlansController {
         // console.log("!!ocorreu tudo bem com a connexão!!")
         res.render("plans/indexTable", { plans: plans });
       } else {
-       // console.log(" 1 erro ao carrega na view, banco não está funcionando");
+        // console.log(" 1 erro ao carrega na view, banco não está funcionando");
         //res.json(plans);
         res.render("plans", { plans: plans });
         // res.json("Houve um erro: \n" + JSON.stringify(plans));
@@ -47,7 +46,7 @@ class PlansController {
     var result = await PlansService.store(plan);
     //res.json(plan);
     if (result == true) {
-		res.redirect("/admin/plans");
+      res.redirect("/admin/plans");
     } else {
       req.flash("title_msg", result.title_msg);
       req.flash("list_msg", result.list_msg);
@@ -56,7 +55,7 @@ class PlansController {
     }
   }
 
- /*  update(req, res) { //renderiza uma tela igual ao do create
+  /*  update(req, res) { //renderiza uma tela igual ao do create
     res.render("plans/create", {
       title_msg: req.flash("title_msg"),
       list_msg: req.flash("list_msg")
@@ -71,23 +70,27 @@ class PlansController {
     var result = await PlansService.update(id, plan);
     //res.json(plan);
     if (result == true) {
-		res.redirect("/admin/plans");
+      res.redirect("/admin/plans");
     } else {
       req.flash("title_msg", result.title_msg);
       req.flash("list_msg", result.list_msg);
-      res.redirect("/admin/plans/edit/"+ id);
+      res.redirect("/admin/plans/edit/" + id);
       //	console.log(result);
     }
   }
 
   async edit(req, res) {
-	let plan = {};
-	
+    let plan = {};
+
     try {
       plan = await PlansService.getById(req.params.id);
       // res.json(plan);
       if (plan.system_msg == undefined) {
-        res.render("plans/edit", { plan, title_msg: req.flash("title_msg"), list_msg: req.flash("list_msg") });
+        res.render("plans/edit", {
+          plan,
+          title_msg: req.flash("title_msg"),
+          list_msg: req.flash("list_msg")
+        });
       } else {
         res.render("plans/edit", { plan });
       }
@@ -98,7 +101,11 @@ class PlansController {
     //res.render("plans/edit");
   }
 
-
+  async deactivate(req, res) {
+    var id = req.params.id;
+    await PlansService.deactivate(id);
+    res.redirect("/admin/plans")
+  }
 }
 
 //não estou usando esta função não funciona deste jeito (queria mandar notificações para a view)

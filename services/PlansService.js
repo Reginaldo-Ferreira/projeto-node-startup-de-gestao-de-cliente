@@ -8,7 +8,6 @@ class PlansService {
 
   async update(id, data) {
     var errors = {};
-console.log("atualizando ....................................................................")
     var isValid = this.validate(data, errors);
     if (isValid) {
       try {
@@ -33,7 +32,7 @@ console.log("atualizando .......................................................
     let dbPlan = {};
     var errors = {};
     try {
-      dbPlan = await this.Plan.findAll({ order: [["id", "DESC"]], limit: 4 });
+      dbPlan = await this.Plan.findAll(); //{ order: [["id", "DESC"]], limit: 4 }
       return dbPlan;
       //  console.log(dbPlan);
     } catch (e) {
@@ -86,6 +85,18 @@ console.log("atualizando .......................................................
     // }).catch(err => {
     //
     // });
+  }
+
+  async deactivate(id) {
+    try {
+      var plan = await this.getById(id);
+      plan.deactivate = true; // nomeclatura correta é 'deactivated' , contudo ficará com o nome que já estava. 
+      await plan.save();
+      return true;
+    } catch (error) {
+      return false;
+    }
+
   }
 
   validate(plan, errors) {

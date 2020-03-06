@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     list: DataTypes.INTEGER,
     client: DataTypes.INTEGER,
     value: DataTypes.FLOAT,
-    import: DataTypes.BOOLEAN
+    import: DataTypes.BOOLEAN,
+    deactivate: DataTypes.BOOLEAN
   }, {});
   Plan.associate = function(models) {
     // associations can be defined here
