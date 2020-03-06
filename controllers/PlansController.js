@@ -64,6 +64,11 @@ class PlansController {
 
   async update(req, res) {
     var { title, list, client, value, imports, id } = req.body;
+    if (imports === undefined) { // corrigir bug de atualizaçao 
+      imports = 0; // mudando de undefined para o valor '0'.
+    }else{
+      imports = 1; 
+    }
 
     var plan = { title, list, client, value, import: imports };
 
