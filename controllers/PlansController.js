@@ -103,7 +103,8 @@ class PlansController {
 
   async deactivate(req, res) {
     var id = req.params.id;
-    await PlansService.deactivate(id);
+    var deactivate = req.params.deactivate; // varlor boolean
+    await PlansService.deactivate(id,deactivate);
     res.redirect("/admin/plans")
   }
 }

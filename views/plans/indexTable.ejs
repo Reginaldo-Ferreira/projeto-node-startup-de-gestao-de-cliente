@@ -38,7 +38,12 @@
 						</h5> 
 					</td>
 					<td> <%= plan.deactivate %></td>
-					<td><a href="/plans/deactivate/<%= plan.id %>" > Desativar </a>  </td>
+
+					<% if(plan.deactivate){ %>
+						<td><a href="/plans/deactivate/<%= plan.id %>/false" > Desativar </a>  </td>
+						<% } else{ %> 
+						<td><a href="/plans/deactivate/<%= plan.id %>/true" > Ativar </a>  </td>
+						<% } %>
 				</tr>
 			<% }) %>
 			</tbody>

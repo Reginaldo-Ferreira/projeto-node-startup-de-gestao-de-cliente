@@ -9,5 +9,5 @@ router.get("/admin/plans/edit/:id",PlansController.edit);
 router.post("/plans/update",PlansController.update);
 
 router.post("/plans/store",PlansController.store);
-router.get("/plans/deactivate/:id", PlansController.deactivate);
+router.get("/plans/deactivate/:id/:deactivate", PlansController.deactivate);
 module.exports = router;

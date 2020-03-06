@@ -87,10 +87,10 @@ class PlansService {
     // });
   }
 
-  async deactivate(id) {
+  async deactivate(id, deactivate) {
     try {
       var plan = await this.getById(id);
-      plan.deactivate = true; // nomeclatura correta é 'deactivated' , contudo ficará com o nome que já estava. 
+      plan.deactivate = deactivate; //ativa ou desativa nomeclatura correta é 'deactivated' , contudo ficará com o nome que já estava. 
       await plan.save();
       return true;
     } catch (error) {
