@@ -96,7 +96,6 @@ class PlansService {
     } catch (error) {
       return false;
     }
-
   }
 
   validate(plan, errors) {
